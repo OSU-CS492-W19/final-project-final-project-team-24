@@ -72,18 +72,14 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         @Override
         protected void onPostExecute(String s) {
             if (s != null) {
-                Log.d(TAG, "RESULT ----- " + s);
-//                TwitchApiUtils.Game[] games = TwitchApiUtils.parseSearchResults(s);
-//                mTopGameAdapter.updateSearchResults(games);
+//                Log.d(TAG, "RESULT ----- " + s);
             } else {
-//                mLoadingErrorTV.setVisibility(View.VISIBLE);
-//                mTopGameListRV.setVisibility(View.INVISIBLE);
+
             }
-//            mLoadingPB.setVisibility(View.INVISIBLE);
         }
     }
 
-    
+
     class TopGamesTask extends AsyncTask<String, Void, String> {
 
         @Override
