@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Twitching</string>
+    <string name="loading_error">Unable to run query.  Check internet.</string>
 </resources>
