@@ -48,9 +48,42 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
 
     @Override
     public void onTopGameItemClick(TwitchApiUtils.Game detailedTopGame) {
-
+        new StreamsTask().execute(detailedTopGame.id);
     }
 
+    class StreamsTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... gameId) {
+            Log.d(TAG, "GameID ----- " + gameId[0]);
+
+            String results = null;
+            results = TwitchApiUtils.getStreams(gameId[0]);
+
+            Log.d(TAG, "RESULT ----- " + results);
+            return results;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (s != null) {
+                Log.d(TAG, "RESULT ----- " + s);
+//                TwitchApiUtils.Game[] games = TwitchApiUtils.parseSearchResults(s);
+//                mTopGameAdapter.updateSearchResults(games);
+            } else {
+//                mLoadingErrorTV.setVisibility(View.VISIBLE);
+//                mTopGameListRV.setVisibility(View.INVISIBLE);
+            }
+//            mLoadingPB.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    
     class TopGamesTask extends AsyncTask<String, Void, String> {
 
         @Override
