@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Twitching</string>
     <string name="error_message">Error! Could not retrieve information from the API.</string>
+    <string name="pref_language_key">LANGUAGE_KEY</string>
+    <string name="pref_community_key">COMMUNITY_KEY</string>
+    <string name="pref_community_title">Community</string>
+    <string name="pref_language_title">Language</string>
+    <string name="pref_language_default">any</string>
 </resources>
