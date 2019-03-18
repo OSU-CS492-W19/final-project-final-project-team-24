@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 
@@ -115,6 +116,8 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         System.out.println("here");
+//        TwitchViewModel.StreamsTask().execute();
+        Log.d(TAG, "onSharedPreferenceChanged: "+key);
     }
 
     @Override

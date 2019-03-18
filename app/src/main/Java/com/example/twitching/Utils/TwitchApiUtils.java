@@ -16,12 +16,21 @@ public class TwitchApiUtils {
     private static final String ClientId = "j6hqib6mxgjmd04c9hexytji00i052";
     private static final String ClientSecret = "vj33sanos0i74v37z1oh7dwo27aw3x";
 
+//  Top games api call classes
     public static class Game implements Serializable {
         public String name;
         public String id;
     }
     public static class TopGames implements Serializable {
         public Game[] data;
+    }
+
+//  Streams api call classes
+    public static class Stream implements Serializable {
+        public String title;
+    }
+    public static class Streams implements Serializable {
+        public Stream[] data;
     }
 
     public static String getTopGames() {

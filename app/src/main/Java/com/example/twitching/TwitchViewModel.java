@@ -21,6 +21,8 @@ import static android.content.ContentValues.TAG;
 
 public class TwitchViewModel extends AndroidViewModel {
     private MutableLiveData<List<TwitchApiUtils.Game>> games;
+    private MutableLiveData<List<TwitchApiUtils.Stream>> streams;
+
     private MainActivityInterface mainActivityInterface;
 
     public TwitchViewModel(@NonNull Application application) {
@@ -51,9 +53,20 @@ public class TwitchViewModel extends AndroidViewModel {
         return games.getValue();
     }
 
+    public List<TwitchApiUtils.Stream> doGetTopStreams(String gameId) {
+        if (streams == null){
+            streams = new MutableLiveData<List<TwitchApiUtils.Stream>>();
+            new StreamsTask().execute(gameId);
+            Log.d(TAG, "Performing Async Task");
+        }else{
+            Log.d(TAG, "Just returning stuff. no async task");
+        }
+        return streams.getValue();
+    }
+
 
     // THIS IS STREAM GET HTTP TASK
-/*    class StreamsTask extends AsyncTask<String, Void, String> {
+    class StreamsTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -79,7 +92,7 @@ public class TwitchViewModel extends AndroidViewModel {
 
             }
         }
-    }*/
+    }
 
 
     class TopGamesTask extends AsyncTask<String, Void, String> {
