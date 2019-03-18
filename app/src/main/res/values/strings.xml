@@ -1,9 +1,51 @@
 <resources>
     <string name="app_name">Twitching</string>
-    <string name="error_message">Error! Could not retrieve information from the API.</string>
-    <string name="pref_language_key">LANGUAGE_KEY</string>
     <string name="pref_community_key">COMMUNITY_KEY</string>
     <string name="pref_community_title">Community</string>
     <string name="pref_language_title">Language</string>
-    <string name="pref_language_default">any</string>
+    <string name="loading_error">Unable to run query.  Check internet.</string>
+
+    <!-- Strings for sort-by preference -->
+    <string name="pref_sort_key" translatable="false">pref_sort</string>
+    <string name="pref_sort_title">Sort by</string>
+    <string name="pref_sort_entry_best_match">Best match</string>
+    <string name="pref_sort_entry_stars">Stars</string>
+    <string name="pref_sort_value_stars" translatable="false">stars</string>
+    <string name="pref_sort_entry_forks">Forks</string>
+    <string name="pref_sort_value_forks" translatable="false">forks</string>
+    <string name="pref_sort_entry_updated">Most-recently updated</string>
+    <string name="pref_sort_value_updated" translatable="false">updated</string>
+    <string name="pref_sort_default">@string/pref_sort_value_stars</string>
+
+    <!-- Strings for programming language preference -->
+    <string name="pref_language_key" translatable="false">pref_language</string>
+    <string name="pref_language_default"></string>
+    <string name="pref_language_entry_any">Any language</string>
+    <string name="pref_language_entry_c">C</string>
+    <string name="pref_language_value_c" translatable="false">c</string>
+    <string name="pref_language_entry_cpp">C++</string>
+    <string name="pref_language_value_cpp" translatable="false">c++</string>
+    <string name="pref_language_entry_java">Java</string>
+    <string name="pref_language_value_java" translatable="false">java</string>
+    <string name="pref_language_entry_kotlin">Kotlin</string>
+    <string name="pref_language_value_kotlin" translatable="false">kotlin</string>
+    <string name="pref_language_entry_javascript">Javascript</string>
+    <string name="pref_language_value_javascript" translatable="false">javascript</string>
+    <string name="pref_language_entry_rust">Rust</string>
+    <string name="pref_language_value_rust" translatable="false">rust</string>
+    <string name="pref_language_entry_python">Python</string>
+    <string name="pref_language_value_python" translatable="false">python</string>
+
+    <!-- Strings for search-in preference -->
+    <string name="pref_in_title">Search in</string>
+    <string name="pref_in_name_key" translatable="false">pref_in_name</string>
+    <string name="pref_in_name_title">Search in name</string>
+    <string name="pref_in_description_key" translatable="false">pref_in_description</string>
+    <string name="pref_in_description_title">Search in description</string>
+    <string name="pref_in_readme_key" translatable="false">pref_in_readme</string>
+    <string name="pref_in_readme_title">Search in README</string>
+
+    <!-- Strings for user preference -->
+    <string name="pref_user_key" translatable="false">pref_user</string>
+    <string name="pref_user_title">GitHub user</string>
 </resources>
