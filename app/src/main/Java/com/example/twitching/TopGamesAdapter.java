@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.twitching.Utils.TwitchApiUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGameItemViewHolder> {
@@ -38,7 +37,7 @@ public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGam
     @Override
     public TopGameItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.forecast_list_item, parent, false);
+        View view = inflater.inflate(R.layout.stream_list_item, parent, false);
         return new TopGameItemViewHolder(view);
     }
 
@@ -56,7 +55,7 @@ public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGam
 
         public TopGameItemViewHolder(View itemView) {
             super(itemView);
-            mTopGameTextView = itemView.findViewById(R.id.tv_forecast_text);
+            mTopGameTextView = itemView.findViewById(R.id.tv_stream_text);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
