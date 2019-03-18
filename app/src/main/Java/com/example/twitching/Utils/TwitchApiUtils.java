@@ -36,6 +36,7 @@ public class TwitchApiUtils {
     }
 
     public static String getStreams(String gameId) {
+        // TODO: Create URL based on SharedPreferences
         String url = "https://api.twitch.tv/helix/streams?"+gameId;
         try {
             return NetworkUtils.doHTTPGet(url,ClientId);
@@ -47,6 +48,8 @@ public class TwitchApiUtils {
     }
 
     public static ArrayList<Game> parseSearchResults(String json) {
+        // TODO: I think there is an error where the TwitchAPI doesn't
+        // TODO: return a NULL string. It returns an error message or something.
         Gson gson = new Gson();
         TopGames results = gson.fromJson(json, TopGames.class);
         if (results != null && results.data != null) {

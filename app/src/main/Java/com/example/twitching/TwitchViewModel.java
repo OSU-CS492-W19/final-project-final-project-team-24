@@ -15,6 +15,9 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
+/* This class is the viewmodel. Essentially it calls the HTTP get functions if
+   there is no data, and just returns the data if there is data. Super useful!
+ */
 
 public class TwitchViewModel extends AndroidViewModel {
     private MutableLiveData<List<TwitchApiUtils.Game>> games;

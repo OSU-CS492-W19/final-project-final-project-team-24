@@ -15,7 +15,7 @@ import java.util.List;
 public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGameItemViewHolder> {
     private List<TwitchApiUtils.Game> mGames;
 
-    public void updateSearchResults(List<TwitchApiUtils.Game> games) {
+    public void updateAdapter(List<TwitchApiUtils.Game> games) {
         mGames = games;
         notifyDataSetChanged();
     }

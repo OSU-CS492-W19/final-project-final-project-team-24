@@ -3,7 +3,6 @@ package com.example.twitching;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,10 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.MenuItem;
-import com.example.twitching.Utils.NetworkUtils;
+
 import com.example.twitching.Utils.TwitchApiUtils;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -66,17 +64,19 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         mTopGameAdapter = new TopGamesAdapter(this);
         mTopGameListRV.setAdapter(mTopGameAdapter);
 
-
+        // Get the viewmodel, set it up using MainActivityInterface (used for making loading
+        // and error messages invisible/visible). Then, get the top games!
         mViewModel = ViewModelProviders.of(this).get(TwitchViewModel.class);
         mViewModel.setup(this);
         mViewModel.doGetTopGames();
 
     }
 
+    // On Resume, update the
     @Override
     public void onResume(){
         super.onResume();
-        mTopGameAdapter.updateSearchResults(mViewModel.doGetTopGames());
+        mTopGameAdapter.updateAdapter(mViewModel.doGetTopGames());
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         mLoadingErrorTV.setVisibility(View.INVISIBLE);
         mTopGameListRV.setVisibility(View.VISIBLE);
         mLoadingPB.setVisibility(View.INVISIBLE);
-        mTopGameAdapter.updateSearchResults(games);
+        mTopGameAdapter.updateAdapter(games);
     }
 
     @Override
