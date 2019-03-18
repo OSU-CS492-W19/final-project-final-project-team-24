@@ -6,6 +6,8 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -44,11 +46,15 @@ public class TwitchApiUtils {
         }
     }
 
-    public static Game[] parseSearchResults(String json) {
+    public static ArrayList<Game> parseSearchResults(String json) {
         Gson gson = new Gson();
         TopGames results = gson.fromJson(json, TopGames.class);
         if (results != null && results.data != null) {
-            return results.data;
+            ArrayList<Game> top_games = new ArrayList<>();
+            for(Game game : results.data){
+                top_games.add(game);
+            }
+            return top_games;
         } else {
             return null;
         }

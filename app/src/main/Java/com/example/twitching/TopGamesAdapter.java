@@ -10,12 +10,13 @@ import android.widget.TextView;
 import com.example.twitching.Utils.TwitchApiUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGameItemViewHolder> {
-    private TwitchApiUtils.Game[] mRepos;
+    private List<TwitchApiUtils.Game> mGames;
 
-    public void updateSearchResults(TwitchApiUtils.Game[] repos) {
-        mRepos = repos;
+    public void updateSearchResults(List<TwitchApiUtils.Game> games) {
+        mGames = games;
         notifyDataSetChanged();
     }
 
@@ -27,8 +28,8 @@ public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGam
 
     @Override
     public int getItemCount() {
-        if (mRepos != null) {
-            return mRepos.length;
+        if (mGames != null) {
+            return mGames.size();
         } else {
             return 0;
         }
@@ -43,7 +44,7 @@ public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGam
 
     @Override
     public void onBindViewHolder(TopGameItemViewHolder holder, int position) {
-        holder.bind(mRepos[position]);
+        holder.bind(mGames.get(position));
     }
 
     public interface OnTopGameItemClickListener {
@@ -60,7 +61,7 @@ public class TopGamesAdapter extends RecyclerView.Adapter<TopGamesAdapter.TopGam
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnTopGameItemClickListener.onTopGameItemClick(mRepos[getAdapterPosition()]);
+                    mOnTopGameItemClickListener.onTopGameItemClick(mGames.get(getAdapterPosition()));
                 }
             });
         }

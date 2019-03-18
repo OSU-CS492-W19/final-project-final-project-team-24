@@ -1,5 +1,6 @@
 package com.example.twitching;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -22,16 +23,21 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements TopGamesAdapter.OnTopGameItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener,  NavigationView.OnNavigationItemSelectedListener {
+
+public class MainActivity extends AppCompatActivity implements TopGamesAdapter.OnTopGameItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener,  NavigationView.OnNavigationItemSelectedListener, TwitchViewModel.MainActivityInterface {
     private DrawerLayout mDrawerLayout;
 
-    private static final String TAG = "main";
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     private RecyclerView mTopGameListRV;
     private TextView mLoadingErrorTV;
     private ProgressBar mLoadingPB;
     private TopGamesAdapter mTopGameAdapter;
+
+
+    private TwitchViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,9 +66,37 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         mTopGameAdapter = new TopGamesAdapter(this);
         mTopGameListRV.setAdapter(mTopGameAdapter);
 
-        doGitHubSearch();
 
+        mViewModel = ViewModelProviders.of(this).get(TwitchViewModel.class);
+        mViewModel.setup(this);
+        mViewModel.doGetTopGames();
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mTopGameAdapter.updateSearchResults(mViewModel.doGetTopGames());
+    }
+
+    @Override
+    public void onPreExecute(){
+        mLoadingPB.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onSuccess(List<TwitchApiUtils.Game> games){
+        mLoadingErrorTV.setVisibility(View.INVISIBLE);
+        mTopGameListRV.setVisibility(View.VISIBLE);
+        mLoadingPB.setVisibility(View.INVISIBLE);
+        mTopGameAdapter.updateSearchResults(games);
+    }
+
+    @Override
+    public void onError(){
+        mLoadingErrorTV.setVisibility(View.VISIBLE);
+        mTopGameListRV.setVisibility(View.INVISIBLE);
+        mLoadingPB.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -75,6 +109,8 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -94,75 +130,8 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         }
     }
 
-    private void doGitHubSearch() {
-        new TopGamesTask().execute("");
-    }
-
     @Override
     public void onTopGameItemClick(TwitchApiUtils.Game detailedTopGame) {
-        new StreamsTask().execute(detailedTopGame.id);
-    }
-
-    class StreamsTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... gameId) {
-            Log.d(TAG, "GameID ----- " + gameId[0]);
-
-            String results = null;
-            results = TwitchApiUtils.getStreams(gameId[0]);
-
-            Log.d(TAG, "RESULT ----- " + results);
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if (s != null) {
-//                Log.d(TAG, "RESULT ----- " + s);
-            } else {
-
-            }
-        }
-    }
-
-
-    class TopGamesTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingPB.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-            String url = urls[0];
-            String results = null;
-            results = TwitchApiUtils.getTopGames();
-
-            Log.d(TAG, "RESULT ----- " + results);
-            return results;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if (s != null) {
-                mLoadingErrorTV.setVisibility(View.INVISIBLE);
-                mTopGameListRV.setVisibility(View.VISIBLE);
-                Log.d(TAG, "RESULT ----- " + s);
-                TwitchApiUtils.Game[] games = TwitchApiUtils.parseSearchResults(s);
-                mTopGameAdapter.updateSearchResults(games);
-            } else {
-                mLoadingErrorTV.setVisibility(View.VISIBLE);
-                mTopGameListRV.setVisibility(View.INVISIBLE);
-            }
-            mLoadingPB.setVisibility(View.INVISIBLE);
-        }
+        System.out.println("here");
     }
 }
