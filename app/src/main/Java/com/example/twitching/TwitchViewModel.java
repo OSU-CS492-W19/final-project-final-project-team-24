@@ -54,13 +54,10 @@ public class TwitchViewModel extends AndroidViewModel {
     }
 
     public List<TwitchApiUtils.Stream> doGetTopStreams(String gameId) {
-        if (streams == null){
-            streams = new MutableLiveData<List<TwitchApiUtils.Stream>>();
-            new StreamsTask().execute(gameId);
-            Log.d(TAG, "Performing Async Task");
-        }else{
-            Log.d(TAG, "Just returning stuff. no async task");
-        }
+//      Request has to be performed every time since each gameId is unique
+        streams = new MutableLiveData<List<TwitchApiUtils.Stream>>();
+        new StreamsTask().execute(gameId);
+        Log.d(TAG, "Performing Async Task");
         return streams.getValue();
     }
 

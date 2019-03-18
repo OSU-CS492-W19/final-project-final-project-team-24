@@ -115,9 +115,7 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        System.out.println("here");
-//        TwitchViewModel.StreamsTask().execute();
-        Log.d(TAG, "onSharedPreferenceChanged: "+key);
+        System.out.println("preferences changed");
     }
 
     @Override
@@ -135,6 +133,6 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
 
     @Override
     public void onTopGameItemClick(TwitchApiUtils.Game detailedTopGame) {
-        System.out.println("here");
+        mViewModel.doGetTopStreams(detailedTopGame.id);
     }
 }
