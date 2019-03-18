@@ -1,34 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.twitching.MainActivity"
-    android:orientation="horizontal">
+    android:fitsSystemWindows="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_forecast_list"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.android.Twitching.MainActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tv_loading_error"
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="16dp"
-            android:visibility="invisible"
-            android:text="@string/loading_error" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:titleTextColor="@color/colorTitle"/>
 
-        <ProgressBar
-            android:id="@+id/pb_loading"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="32dp"
-            android:visibility="invisible"/>
-    </FrameLayout>
-</LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+             <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_forecast_items"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+              <TextView
+                android:id="@+id/tv_loading_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="16dp"
+                android:visibility="invisible"
+                android:text="@string/loading_error" />
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="32dp"
+                android:visibility="invisible"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nv_nav_drawer"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_drawer_header"
+        app:menu="@menu/nav_drawer">
+
+    </android.support.design.widget.NavigationView>
+</android.support.v4.widget.DrawerLayout>

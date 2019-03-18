@@ -27,7 +27,7 @@ public class NetworkUtils {
         try {
             return response.body().string();
         } finally {
-            Log.d(TAG, "doHTTPGet: Request failed");
+//            Log.d(TAG, "doHTTPGet: Request failed");
             response.close();
         }
     }

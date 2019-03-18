@@ -24,10 +24,19 @@ public class TwitchApiUtils {
 
     public static String getTopGames() {
         try {
-//          gets top 100 streamed games from twitch game list
-            String response = NetworkUtils.doHTTPGet("https://api.twitch.tv/helix/games/top?100",ClientId);
-            Log.d(TAG, "getTopGames: "+response);
-            return response;
+            //   gets top 100 streamed games from twitch game list
+            return NetworkUtils.doHTTPGet("https://api.twitch.tv/helix/games/top?100",ClientId);
+        } catch (IOException e) {
+            Log.d(TAG, "getTopGames: failed");
+            e.printStackTrace();
+            return "Error, exception encountered";
+        }
+    }
+
+    public static String getStreams(String gameId) {
+        String url = "https://api.twitch.tv/helix/streams?"+gameId;
+        try {
+            return NetworkUtils.doHTTPGet(url,ClientId);
         } catch (IOException e) {
             Log.d(TAG, "getTopGames: failed");
             e.printStackTrace();
