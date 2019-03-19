@@ -25,6 +25,10 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.StreamItem
         mOnStreamsClickListener = onStreamsClickListener;
     }
 
+    public List<TwitchApiUtils.Stream> getStreams(){
+        return mStreams;
+    }
+
     @NonNull
     @Override
     public StreamItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.example.twitching.Utils.TwitchApiUtils;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class StreamsActivity extends AppCompatActivity implements StreamAdapter.OnStreamClickListener, SharedPreferences.OnSharedPreferenceChangeListener,  NavigationView.OnNavigationItemSelectedListener, StreamViewModel.StreamActvityInterface {
@@ -88,6 +90,7 @@ public class StreamsActivity extends AppCompatActivity implements StreamAdapter.
         mLoadingErrorTV.setVisibility(View.INVISIBLE);
         mTopGameListRV.setVisibility(View.VISIBLE);
         mLoadingPB.setVisibility(View.INVISIBLE);
+        games = shuffle(games);
         mTopGameAdapter.updateAdapter(games);
     }
 
@@ -96,6 +99,11 @@ public class StreamsActivity extends AppCompatActivity implements StreamAdapter.
         mLoadingErrorTV.setVisibility(View.VISIBLE);
         mTopGameListRV.setVisibility(View.INVISIBLE);
         mLoadingPB.setVisibility(View.INVISIBLE);
+    }
+
+    public List<TwitchApiUtils.Stream> shuffle(List<TwitchApiUtils.Stream> strem){
+        Collections.shuffle(strem);
+        return strem;
     }
 
     @Override
