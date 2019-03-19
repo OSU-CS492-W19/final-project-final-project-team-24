@@ -1,13 +1,17 @@
 package com.example.twitching;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,6 +29,8 @@ public class StreamInfoActivity extends AppCompatActivity  {
 
     private ImageView mThumbnailIV;
 
+    private String streamerL;
+
     private TwitchApiUtils.Stream mStream;
 
     @Override
@@ -39,6 +45,15 @@ public class StreamInfoActivity extends AppCompatActivity  {
 
         mThumbnailIV = findViewById(R.id.iv_stream_thumbnail);
 
+        Button watchButton = findViewById(R.id.btn_watch);
+        watchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String link = "https://twitch.tv/" + streamerL;
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(browserIntent);
+            }
+        });
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(TwitchApiUtils.EXTRA_STREAM_ITEM)){
@@ -54,6 +69,8 @@ public class StreamInfoActivity extends AppCompatActivity  {
         String start = getString(R.string.stream_start, stream.started_at);
 
         String thumb = stream.thumbnail_url;
+
+        streamerL = stream.user_name;
 
         Glide.with(this).load(thumb).into(mThumbnailIV);
         mStreamNameTV.setText(title);
