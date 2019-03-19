@@ -59,6 +59,7 @@ public class TwitchViewModel extends AndroidViewModel {
         new StreamsTask().execute(gameId);
         Log.d(TAG, "Performing Async Task");
         return streams.getValue();
+
     }
 
 
@@ -77,16 +78,17 @@ public class TwitchViewModel extends AndroidViewModel {
             String results = null;
             results = TwitchApiUtils.getStreams(gameId[0]);
 
-            Log.d(TAG, "RESULT ----- " + results);
+            Log.d(TAG, "RESULT 1-1----- " + results);
             return results;
         }
 
         @Override
         protected void onPostExecute(String s) {
             if (s != null) {
-//                Log.d(TAG, "RESULT ----- " + s);
-            } else {
+                Log.d(TAG, "RESULT ----- " + s);
 
+            } else {
+                Log.d(TAG, "moop" );
             }
         }
     }

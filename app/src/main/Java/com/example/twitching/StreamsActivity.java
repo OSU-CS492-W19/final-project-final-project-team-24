@@ -11,24 +11,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
-
-import com.example.twitching.Utils.TwitchApiUtils;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.twitching.Utils.TwitchApiUtils;
+
 import java.util.List;
-import java.util.Random;
 
-import static android.content.ContentValues.TAG;
-
-
-public class MainActivity extends AppCompatActivity implements TopGamesAdapter.OnTopGameItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener,  NavigationView.OnNavigationItemSelectedListener, TwitchViewModel.MainActivityInterface {
+public class StreamsActivity extends AppCompatActivity implements StreamAdapter.OnStreamClickListener, SharedPreferences.OnSharedPreferenceChangeListener,  NavigationView.OnNavigationItemSelectedListener, StreamViewModel.StreamActvityInterface {
     private DrawerLayout mDrawerLayout;
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -36,23 +32,17 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
     private RecyclerView mTopGameListRV;
     private TextView mLoadingErrorTV;
     private ProgressBar mLoadingPB;
-    private TopGamesAdapter mTopGameAdapter;
+    private StreamAdapter mTopGameAdapter;
 
+    private String mGame;
 
-
-    private TwitchViewModel mViewModel;
+    private StreamViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDrawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nv_nav_drawer);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -66,22 +56,26 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         mTopGameListRV.setLayoutManager(new LinearLayoutManager(this));
         mTopGameListRV.setHasFixedSize(true);
 
-        mTopGameAdapter = new TopGamesAdapter(this);
+        mTopGameAdapter = new StreamAdapter(this);
         mTopGameListRV.setAdapter(mTopGameAdapter);
 
         // Get the viewmodel, set it up using MainActivityInterface (used for making loading
         // and error messages invisible/visible). Then, get the top games!
-        mViewModel = ViewModelProviders.of(this).get(TwitchViewModel.class);
-        mViewModel.setup(this);
-        mViewModel.doGetTopGames();
+        mViewModel = ViewModelProviders.of(this).get(StreamViewModel.class);
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("Stuff")){
+            mGame = (String)intent.getSerializableExtra("Stuff");
+            mViewModel.setup( this, mGame);
+            mViewModel.doGetTopStreams(mGame);
+        }
     }
 
     // On Resume, update the
     @Override
     public void onResume(){
         super.onResume();
-        mTopGameAdapter.updateAdapter(mViewModel.doGetTopGames());
+        mTopGameAdapter.updateAdapter(mViewModel.doGetTopStreams(mGame));
     }
 
     @Override
@@ -90,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
     }
 
     @Override
-    public void onSuccess(List<TwitchApiUtils.Game> games){
+    public void onSuccess(List<TwitchApiUtils.Stream> games){
         mLoadingErrorTV.setVisibility(View.INVISIBLE);
         mTopGameListRV.setVisibility(View.VISIBLE);
         mLoadingPB.setVisibility(View.INVISIBLE);
@@ -135,14 +129,11 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
         }
     }
 
+
     @Override
-    public void onTopGameItemClick(TwitchApiUtils.Game detailedTopGame) {
-        System.out.println(detailedTopGame.id);
-        System.out.println(detailedTopGame.name);
-        List<TwitchApiUtils.Stream> streams = mViewModel.doGetTopStreams(detailedTopGame.id);
-        Log.d(TAG, "Main " + streams);
-        Intent intent = new Intent(this, StreamsActivity.class);
-        intent.putExtra("Stuff",detailedTopGame.id);
+    public void onStreamClick(TwitchApiUtils.Stream streamDetail){
+        Intent intent = new Intent(this, StreamInfoActivity.class);
+        intent.putExtra(TwitchApiUtils.EXTRA_STREAM_ITEM,streamDetail);
         startActivity(intent);
-        }
+    }
 }
