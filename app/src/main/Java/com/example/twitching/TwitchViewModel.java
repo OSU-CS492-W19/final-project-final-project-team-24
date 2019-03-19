@@ -53,10 +53,10 @@ public class TwitchViewModel extends AndroidViewModel {
         return games.getValue();
     }
 
-    public List<TwitchApiUtils.Stream> doGetTopStreams(String gameId) {
+    public List<TwitchApiUtils.Stream> doGetTopStreams(String gameId, String lang, String comm) {
 //      Request has to be performed every time since each gameId is unique
         streams = new MutableLiveData<List<TwitchApiUtils.Stream>>();
-        new StreamsTask().execute(gameId);
+        new StreamsTask().execute(gameId, lang, comm);
         Log.d(TAG, "Performing Async Task");
         return streams.getValue();
 
@@ -72,11 +72,13 @@ public class TwitchViewModel extends AndroidViewModel {
         }
 
         @Override
-        protected String doInBackground(String... gameId) {
-            Log.d(TAG, "GameID ----- " + gameId[0]);
+        protected String doInBackground(String... args) {
+            Log.d(TAG, "GameID ------- " + args[0]);
+            Log.d(TAG, "Language ----- " + args[1]);
+            Log.d(TAG, "Community ID --" + args[2]);
 
-            String results = null;
-            results = TwitchApiUtils.getStreams(gameId[0]);
+
+            String results = TwitchApiUtils.getStreams(args[0], args[1], args[2]);
 
             Log.d(TAG, "RESULT 1-1----- " + results);
             return results;

@@ -1,7 +1,12 @@
 package com.example.twitching.Utils;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.example.twitching.MainActivity;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -50,9 +55,15 @@ public class TwitchApiUtils {
         }
     }
 
-    public static String getStreams(String gameId) {
+    public static String getStreams(String gameId, String lang, String community) {
         // TODO: Create URL based on SharedPreferences
-        String url = "https://api.twitch.tv/helix/streams?"+gameId;
+        String baseUrl = "https://api.twitch.tv/helix/streams?"+gameId;
+
+        String url = Uri.parse(baseUrl).buildUpon()
+                .appendQueryParameter("language", lang)
+                .appendQueryParameter("community_id", community)
+                .build().toString();
+
         try {
             return NetworkUtils.doHTTPGet(url,ClientId);
         } catch (IOException e) {

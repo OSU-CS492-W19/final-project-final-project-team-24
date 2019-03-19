@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -21,14 +22,16 @@ public class StreamViewModel extends AndroidViewModel {
     private StreamActvityInterface streamActvityInterface;
 
     private String gameId;
+    private String language;
+    private String community;
 
     public StreamViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public void setup(StreamActvityInterface m, String game){
+    public void setup(StreamActvityInterface m, String game, String lang, String comm){
         streamActvityInterface = m;
-        doGetTopStreams(game);
+        doGetTopStreams(game, lang, comm);
     }
 
     public interface StreamActvityInterface {
@@ -38,9 +41,11 @@ public class StreamViewModel extends AndroidViewModel {
     }
 
 
-    public List<TwitchApiUtils.Stream> doGetTopStreams(String gameID) {
+    public List<TwitchApiUtils.Stream> doGetTopStreams(String gameID, String lang, String comm) {
 //      Request has to be performed every time since each gameId is unique
         gameId = gameID;
+        language = lang;
+        community = comm;
         if (streams == null){
             streams = new MutableLiveData<List<TwitchApiUtils.Stream>>();
             new StreamsTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -70,7 +75,7 @@ public class StreamViewModel extends AndroidViewModel {
             Log.d(TAG, "GameID 0-0----- " + gameId);
 
             String results = null;
-            results = TwitchApiUtils.getStreams(gameId);
+            results = TwitchApiUtils.getStreams(gameId, language, community);
 
             //streams.setValue(TwitchApiUtils.parseSearchResultsStream(results));
 

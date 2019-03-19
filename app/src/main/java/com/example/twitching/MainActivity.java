@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -139,7 +140,21 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
     public void onTopGameItemClick(TwitchApiUtils.Game detailedTopGame) {
         System.out.println(detailedTopGame.id);
         System.out.println(detailedTopGame.name);
-        List<TwitchApiUtils.Stream> streams = mViewModel.doGetTopStreams(detailedTopGame.id);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+
+        String language = prefs.getString(
+                getString(R.string.pref_language_key),
+                ""
+        );
+
+        String community = prefs.getString(
+                getString(R.string.pref_community_key),
+                ""
+        );
+
+        List<TwitchApiUtils.Stream> streams = mViewModel.doGetTopStreams(detailedTopGame.id, language, community);
         Log.d(TAG, "Main " + streams);
         Intent intent = new Intent(this, StreamsActivity.class);
         intent.putExtra("Stuff",detailedTopGame.id);
