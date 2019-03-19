@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements TopGamesAdapter.O
     public void onTopGameItemClick(TwitchApiUtils.Game detailedTopGame) {
         System.out.println(detailedTopGame.id);
         System.out.println(detailedTopGame.name);
+        
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
