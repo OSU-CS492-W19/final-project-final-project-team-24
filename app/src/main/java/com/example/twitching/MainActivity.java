@@ -26,6 +26,8 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements TopGamesAdapter.OnTopGameItemClickListener, SharedPreferences.OnSharedPreferenceChangeListener,  NavigationView.OnNavigationItemSelectedListener, TwitchViewModel.MainActivityInterface {
+    //Just something to try and push
+
     private DrawerLayout mDrawerLayout;
 
     private static final String TAG = MainActivity.class.getSimpleName();
