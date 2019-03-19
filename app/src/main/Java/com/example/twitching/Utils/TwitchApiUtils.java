@@ -57,9 +57,10 @@ public class TwitchApiUtils {
 
     public static String getStreams(String gameId, String lang, String community) {
         // TODO: Create URL based on SharedPreferences
-        String baseUrl = "https://api.twitch.tv/helix/streams?"+gameId;
+        String baseUrl = "https://api.twitch.tv/helix/streams";
 
         String url = Uri.parse(baseUrl).buildUpon()
+                .appendQueryParameter("game_id", gameId)
                 .appendQueryParameter("language", lang)
                 .appendQueryParameter("community_id", community)
                 .build().toString();
