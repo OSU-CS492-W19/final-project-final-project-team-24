@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">Twitching</string>
     <string name="loading_error">Error: could not connect to API.</string>
-    <string name="pref_language_title">Language</string>
+    <string name="pref_language_title">Stream Language</string>
 
     <!-- Strings for programming language preference -->
     <string name="pref_language_key" translatable="false">pref_language</string>
     <string name="pref_language_default">Any language</string>
     <string name="pref_language_entry_any">Any language</string>
+    <string name="pref_language_value_any"></string>
     <string name="pref_language_entry_english">English</string>
     <string name="pref_language_value_english" translatable="false">en</string>
     <string name="pref_language_entry_russian">Russian</string>
@@ -16,5 +17,5 @@
 
     <!-- Strings for user preference -->
     <string name="pref_community_key" translatable="false">pref_community</string>
-    <string name="pref_community_title">Community</string>
+    <string name="pref_community_title">Community ID</string>
 </resources>
